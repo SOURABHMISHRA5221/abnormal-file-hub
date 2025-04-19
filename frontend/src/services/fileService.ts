@@ -14,6 +14,11 @@ export interface FileFilters {
   is_duplicate?: boolean;
 }
 
+export interface DeleteFileParams {
+  id: string;
+  params?: Record<string, string>;
+}
+
 export interface StorageStats {
   total_files: number;
   duplicate_files: number;
@@ -55,8 +60,14 @@ export const fileService = {
     return response.data;
   },
 
-  async deleteFile(id: string): Promise<void> {
-    await axios.delete(`${API_URL}/files/${id}/`);
+  async deleteFile(params: DeleteFileParams | string): Promise<void> {
+    // Handle both string ID and object with params
+    if (typeof params === 'string') {
+      await axios.delete(`${API_URL}/files/${params}/`);
+    } else {
+      const { id, params: queryParams } = params;
+      await axios.delete(`${API_URL}/files/${id}/`, { params: queryParams });
+    }
   },
 
   async downloadFile(fileUrl: string, filename: string): Promise<void> {

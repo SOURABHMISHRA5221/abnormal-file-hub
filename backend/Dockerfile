@@ -16,10 +16,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Create necessary directories
-RUN mkdir -p media staticfiles data
+RUN mkdir -p media staticfiles data logs
 
 # Set permissions
-RUN chmod -R 777 data media staticfiles
+RUN chmod -R 777 data media staticfiles logs
 
 # Collect static files
 RUN python manage.py collectstatic --noinput

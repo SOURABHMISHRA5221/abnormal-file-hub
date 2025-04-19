@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { fileService, FileFilters } from '../services/fileService';
+import { fileService, FileFilters, DeleteFileParams } from '../services/fileService';
 import { File as FileType } from '../types/file';
 import { DocumentIcon, TrashIcon, ArrowDownTrayIcon, DocumentDuplicateIcon } from '@heroicons/react/24/outline';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { SearchFilter } from './SearchFilter';
-import { StorageStats } from './StorageStats';
 
 export const FileList: React.FC = () => {
   const queryClient = useQueryClient();
   const [filters, setFilters] = useState<FileFilters>({});
   const [uniqueFileTypes, setUniqueFileTypes] = useState<string[]>([]);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
+  const [duplicateConfirmation, setDuplicateConfirmation] = useState<{
+    fileId: string;
+    count: number;
+  } | null>(null);
 
   // Query for fetching files
   const { data: files, isLoading, error } = useQuery<FileType[]>({
@@ -40,12 +44,47 @@ export const FileList: React.FC = () => {
       fileService.downloadFile(fileUrl, filename),
   });
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = async (id: string, forceDelete = false) => {
     try {
-      await deleteMutation.mutateAsync(id);
-    } catch (err) {
+      // Clear previous errors
+      setDeleteError(null);
+      
+      // Create properly typed params object
+      const deleteParams: DeleteFileParams = {
+        id,
+        params: forceDelete ? { confirm_delete_original: 'true' } : undefined
+      };
+      
+      await deleteMutation.mutateAsync(deleteParams);
+      
+      // Reset confirmation state on successful deletion
+      setDuplicateConfirmation(null);
+    } catch (err: any) {
       console.error('Delete error:', err);
+      
+      // Handle 409 Conflict - Original file with duplicates
+      if (err.response && err.response.status === 409) {
+        const data = err.response.data;
+        setDuplicateConfirmation({
+          fileId: id,
+          count: data.duplicate_count
+        });
+      } else {
+        setDeleteError('Failed to delete file. Please try again.');
+      }
     }
+  };
+  
+  // Add function to handle confirmation
+  const handleConfirmDelete = () => {
+    if (duplicateConfirmation) {
+      handleDelete(duplicateConfirmation.fileId, true);
+    }
+  };
+  
+  // Add function to cancel deletion
+  const handleCancelDelete = () => {
+    setDuplicateConfirmation(null);
   };
 
   const handleDownload = async (fileUrl: string, filename: string) => {
@@ -73,7 +112,6 @@ export const FileList: React.FC = () => {
   if (isLoading) {
     return (
       <div className="p-6">
-        <StorageStats />
         <SearchFilter onFilterChange={handleFilterChange} fileTypes={uniqueFileTypes} />
         <div className="animate-pulse space-y-4">
           <div className="h-4 bg-gray-200 rounded w-1/4"></div>
@@ -90,7 +128,6 @@ export const FileList: React.FC = () => {
   if (error) {
     return (
       <div className="p-6">
-        <StorageStats />
         <SearchFilter onFilterChange={handleFilterChange} fileTypes={uniqueFileTypes} />
         <div className="bg-red-50 border-l-4 border-red-400 p-4">
           <div className="flex">
@@ -120,8 +157,70 @@ export const FileList: React.FC = () => {
 
   return (
     <div className="p-6">
-      <StorageStats />
       <SearchFilter onFilterChange={handleFilterChange} fileTypes={uniqueFileTypes} />
+      
+      {deleteError && (
+        <div className="bg-red-50 border-l-4 border-red-400 p-4 mb-4">
+          <div className="flex">
+            <div className="flex-shrink-0">
+              <svg
+                className="h-5 w-5 text-red-400"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <p className="text-sm text-red-700">{deleteError}</p>
+            </div>
+          </div>
+        </div>
+      )}
+      
+      {duplicateConfirmation && (
+        <div className="bg-amber-50 border border-amber-300 rounded-md p-4 mb-4">
+          <div className="flex">
+            <div className="flex-shrink-0">
+              <svg className="h-5 w-5 text-amber-500" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <h3 className="text-sm font-medium text-amber-800">Warning: File has duplicates</h3>
+              <div className="mt-2 text-sm text-amber-700">
+                <p>
+                  This file has {duplicateConfirmation.count} duplicate{duplicateConfirmation.count !== 1 ? 's' : ''}. 
+                  It's recommended to delete the duplicates first.
+                </p>
+                <p className="mt-2">
+                  If you proceed, one of the duplicates will become the new original file.
+                </p>
+              </div>
+              <div className="mt-4 flex space-x-3">
+                <button
+                  type="button"
+                  onClick={handleConfirmDelete}
+                  className="inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500"
+                >
+                  Proceed with deletion
+                </button>
+                <button
+                  type="button"
+                  onClick={handleCancelDelete}
+                  className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       
       <h2 className="text-xl font-semibold text-gray-900 mb-4">Uploaded Files</h2>
       {filesList.length === 0 ? (

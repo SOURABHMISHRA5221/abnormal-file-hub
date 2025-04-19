@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FileFilters } from '../services/fileService';
-import { FunnelIcon, MagnifyingGlassIcon, ArrowsUpDownIcon } from '@heroicons/react/24/outline';
+import { FunnelIcon, MagnifyingGlassIcon, ArrowsUpDownIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
 // Get unique file types for filtering
 const DEFAULT_FILE_TYPES = [
@@ -78,13 +78,21 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
   const toggleFilterPanel = () => {
     setIsFilterPanelOpen(!isFilterPanelOpen);
   };
+
+  // Helper to determine if any filters are active
+  const hasActiveFilters = () => {
+    return Object.values(filters).some(value => 
+      value !== undefined && value !== '' && 
+      (typeof value !== 'number' || value > 0)
+    );
+  };
   
   return (
-    <div className="mb-6 bg-white shadow-sm rounded-lg p-4">
+    <div className="abnormal-card p-4 mb-6">
       <div className="flex flex-col sm:flex-row items-center">
         <div className="relative flex-grow mb-2 sm:mb-0">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+            <MagnifyingGlassIcon className="h-5 w-5 text-gray-500" aria-hidden="true" />
           </div>
           <input
             type="text"
@@ -97,7 +105,7 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
         
         <div className="flex space-x-2 ml-0 sm:ml-4">
           <div className="flex items-center">
-            <ArrowsUpDownIcon className="h-5 w-5 text-gray-400 mr-1" aria-hidden="true" />
+            <ArrowsUpDownIcon className="h-5 w-5 text-gray-500 mr-1" aria-hidden="true" />
             <select
               className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md"
               value={filters.ordering || ''}
@@ -116,9 +124,19 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
           <button
             type="button"
             onClick={toggleFilterPanel}
-            className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+            className={`inline-flex items-center px-3 py-2 border shadow-sm text-sm leading-4 font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 ${
+              hasActiveFilters() 
+                ? 'border-primary-300 text-primary-700 bg-primary-50 hover:bg-primary-100' 
+                : 'border-gray-300 text-gray-700 bg-white hover:bg-gray-50'
+            }`}
           >
-            <FunnelIcon className="h-4 w-4 mr-1" /> Filters
+            <FunnelIcon className={`h-4 w-4 mr-1 ${hasActiveFilters() ? 'text-primary-500' : 'text-gray-500'}`} /> 
+            Filters
+            {hasActiveFilters() && (
+              <span className="ml-1 inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
+                Active
+              </span>
+            )}
           </button>
         </div>
       </div>
@@ -220,8 +238,9 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
             <button
               type="button"
               onClick={resetFilters}
-              className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+              className="inline-flex items-center px-4 py-2 border border-primary-300 shadow-sm text-sm font-medium rounded-md text-primary-700 bg-white hover:bg-primary-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
             >
+              <XMarkIcon className="h-4 w-4 mr-1" />
               Reset Filters
             </button>
           </div>

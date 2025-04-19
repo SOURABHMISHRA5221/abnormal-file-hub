@@ -2,8 +2,56 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* Abnormal AI inspired color palette */
+  --color-primary-50: #f5f7ff;
+  --color-primary-100: #ebeefe;
+  --color-primary-200: #d3d8fc;
+  --color-primary-300: #b2b9f9;
+  --color-primary-400: #8a8ef5;
+  --color-primary-500: #6263ef;
+  --color-primary-600: #4d42e3;
+  --color-primary-700: #4336cc;
+  --color-primary-800: #382da5;
+  --color-primary-900: #322c85;
+  
+  /* Secondary colors */
+  --color-blue-50: #edf4ff;
+  --color-blue-900: #223189;
+  
+  --color-green-50: #edfcf5;
+  --color-green-900: #0d4c34;
+  
+  --color-purple-50: #faf5ff;
+  --color-purple-900: #581c87;
+}
+
+/* Apply higher contrast to text */
+.text-gray-500 {
+  color: #64748b !important; /* Slightly darker than default gray-500 */
+}
+
+.text-gray-700 {
+  color: #334155 !important; /* Higher contrast for better readability */
+}
+
+/* Enhance shadows for card components */
+.shadow-sm {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Custom button styles */
+.btn-primary {
+  @apply bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-md;
+}
+
+/* Card component styling */
+.abnormal-card {
+  @apply bg-white rounded-lg shadow-sm overflow-hidden border border-gray-100;
+}
+
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
