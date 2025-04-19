@@ -3,7 +3,6 @@
 A robust file management system with intelligent deduplication for efficient storage optimization.
 
 ![Abnormal File Hub](https://img.shields.io/badge/Abnormal-File%20Hub-blue)
-![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
 
 ## 🌟 Overview
 
@@ -203,10 +202,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 3. Commit your changes (`git commit -m 'Add some amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
-
-## 📜 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## 📞 Contact
 
