@@ -16,6 +16,9 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Ensure logs directory exists
+logs_dir = os.path.join(BASE_DIR, 'logs')
+os.makedirs(logs_dir, exist_ok=True)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
