@@ -52,3 +52,6 @@ data/
 *.swp
 *.swo
 .DS_Store
+
+# Submission files
+*.zip
