@@ -1,118 +1,104 @@
+# Cursor Rules Reference
+# Please refer to the .cursor/rules.md file for comprehensive project rules.
+
+RULES_LOCATION: |
+  The cursor rules for this project have been moved to the .cursor directory.
+  Please refer to the following files:
+  - .cursor/rules.md: Comprehensive project rules
+  - .cursor/README.md: Explanation of rules organization
+
+# Legacy rules below (maintained for backward compatibility)
+# For complete and up-to-date rules, please refer to .cursor/rules.md
+
 # Project Context and Architecture
 SYSTEM_CONTEXT: |
-  You are a senior developer working on a Python/Django REST API and React frontend project for a file storage application with deduplication capabilities.
-  Required file reads on startup:
-  backend/core/settings.py: Django settings and configurations
-  backend/files/models.py: Data models for files and file references
-  backend/files/views.py: API endpoints and business logic
-  frontend/src/components/FileList.tsx: Main file listing component
-  frontend/src/services/fileService.ts: API integration services
+  You are a senior developer working on the Abnormal File Hub project.
   
+  Required file reads on startup:
+  - .cursor/rules.md: Comprehensive project rules (preferred)
+  - docs/architecture.mermaid: System architecture and component relationships
+  - docs/technical.md: Technical specifications and patterns
+  - tasks/tasks.md: Current development tasks and requirements
+  - docs/status.md: Project progress and state
+
   Before making any changes:
-  - Understand the file deduplication system architecture
-  - Check current task context and requirements
-  - Follow established code patterns in both backend and frontend
-  - Maintain proper error handling and logging
-
-  After making any changes:
-  - Run the tests to ensure the changes are working as expected
-  - Run the linter to ensure the changes are following the correct coding standards
-  - Run the formatter to ensure the changes are following the correct coding standards
-  - Update the task list with the new changes
-  - Update status.md with the new changes
-  - Update the README.md with the new changes
-  - Commit the changes to the repository
-
+  1. Check the .cursor/rules.md file for comprehensive guidelines
+  2. Parse and understand system architecture from docs/architecture.mermaid
+  3. Check current task context from tasks/tasks.md
+  4. Follow technical specifications from docs/technical.md
+  5. Review progress in docs/status.md
 
 # File Management Rules
 ON_FILE_CHANGE: |
   Required actions after any code changes:
-  - UPDATE logging statements to use the proper logging level (debug, info, warning, error)
-  - ENSURE consistent error handling patterns
-  - MAINTAIN the same coding style as the existing codebase
-  - VERIFY changes are compatible with Docker deployment
-  - TEST API endpoints against their intended behavior
+  1. READ .cursor/rules.md for comprehensive guidelines
+  2. READ docs/architecture.mermaid to verify architectural compliance
+  3. UPDATE docs/status.md with current progress
+  4. VALIDATE changes against docs/technical.md specifications
+  5. VERIFY task progress against tasks/tasks.md
+  6. COMMIT changes with descriptive messages
+
+# Redirect to new rules location
+READ_NEW_RULES: |
+  For complete and up-to-date rules, please refer to:
+  - .cursor/rules.md
+  - .cursor/README.md
 
 # Code Style and Patterns
-PYTHON_GUIDELINES: |
-  - Use proper Django REST Framework patterns
-  - Follow PEP 8 style guidelines
-  - Implement proper error handling with try/except blocks
-  - Use Django's ORM capabilities correctly
-  - Add appropriate logging at different levels (DEBUG, INFO, WARNING, ERROR)
-  - Document functions with docstrings
-  - Implement proper input validation
-
 TYPESCRIPT_GUIDELINES: |
   - Use strict typing, avoid 'any'
-  - Follow React best practices
-  - Use React Query for data fetching
-  - Document components with JSDoc comments
-  - Implement proper error handling and loading states
-  - Use consistent naming conventions
+  - Follow SOLID principles
+  - Write unit tests for all public methods
+  - Document with JSDoc
 
 # Architecture Understanding
 READ_ARCHITECTURE: |
-  File Storage Application Architecture:
+  File: docs/architecture.mermaid
+  Required parsing:
+  1. Load and parse complete Mermaid diagram
+  2. Extract and understand:
+     - Module boundaries and relationships
+     - Data flow patterns
+     - System interfaces
+     - Component dependencies
+  3. Validate any changes against architectural constraints
+  4. Ensure new code maintains defined separation of concerns
   
-  - Backend (Django REST Framework):
-    - File model stores file metadata and file paths
-    - FileReference model manages relationships between original files and duplicates
-    - File deduplication based on SHA-256 hash comparison
-    - Docker containerization for deployment
-    - SQLite database for development, can be extended to PostgreSQL
-  
-  - Frontend (React/TypeScript):
-    - React with TypeScript for type safety
-    - React Query for API data fetching
-    - File upload component with drag and drop
-    - File list with filtering capabilities
-    - Storage statistics visualization
-  
-  - API Endpoints:
-    - GET /api/files/ - List files with filtering
-    - POST /api/files/ - Upload new file with deduplication
-    - DELETE /api/files/{id}/ - Delete file with reference management
-    - GET /api/files/stats/ - Get storage statistics
+  Error handling:
+  1. If file not found: STOP and notify user
+  2. If diagram parse fails: REQUEST clarification
+  3. If architectural violation detected: WARN user
 
 # Task Management
 TASK_WORKFLOW: |
-  Development workflow:
+  Required files:
+  - tasks/tasks.md: Source of task definitions
+  - docs/status.md: Progress tracking
+  - docs/technical.md: Implementation guidelines
   
-  1. Understand requirements
-  2. Design solution that fits with existing architecture
-  3. Implement backend changes with proper error handling and logging
-  4. Update frontend components to interact with API
-  5. Test the feature end-to-end
-  6. Update documentation as needed
+  Workflow steps:
+  1. READ tasks/tasks.md:
+     - Parse current task requirements
+     - Extract acceptance criteria
+     - Identify dependencies
   
-  Focus areas:
-  - Maintain logging standards
-  - Ensure proper file deduplication
-  - Handle errors gracefully
-  - Create intuitive UI/UX
-  - Optimize for performance
+  2. VALIDATE against docs/architecture.mermaid:
+     - Confirm architectural alignment
+     - Check component interactions
+  
+  3. UPDATE docs/status.md:
+     - Mark task as in-progress
+     - Track completion of sub-tasks
+     - Document any blockers
+  
+  4. IMPLEMENT following TDD:
+     - Create test files first
+     - Implement to pass tests
+     - Update status on test completion
 
 # Error Prevention
 VALIDATION_RULES: |
-  Backend validation:
-  - Validate file uploads (size, type, content)
-  - Verify SHA-256 hash calculation
-  - Check for edge cases in deduplication logic
-  - Ensure proper transaction handling
-  - Validate input parameters
-  
-  Frontend validation:
-  - Form validation for all inputs
-  - Handle API errors gracefully
-  - Implement loading states
-  - Validate file selection before upload
-  - Handle empty states properly
-
-# Docker Environment
-DOCKER_GUIDELINES: |
-  - Maintain compatibility with Docker and docker-compose
-  - Ensure frontend correctly communicates with backend API
-  - Follow volume mapping patterns for persistent storage
-  - Respect environment variable configurations
-  - Handle container startup dependencies correctly 
+  1. Verify type consistency
+  2. Check for potential null/undefined
+  3. Validate against business rules
+  4. Ensure error handling
