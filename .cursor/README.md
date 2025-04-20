@@ -1,40 +1,49 @@
-# Cursor Rules Directory
+# Cursor Configuration
 
-This directory contains configuration and rules for the Cursor AI coding assistant used in the Abnormal File Hub project.
-
-## Contents
-
-- **rules.md** - The main rules file that defines:
-  - Project context and architecture requirements
-  - Workflow requirements for file changes
-  - Code standards for Python, TypeScript, and Docker
-  - Quality assurance procedures
-  - Documentation requirements
-  - Git workflow guidelines
-
-- **ignore** - File patterns to be ignored by Cursor AI:
-  - Build artifacts and compiled code
-  - Large binary files and media
-  - Sensitive configuration files
-  - Temporary and cache files
-  
-- **IGNORE.md** - Documentation for the ignore file format and usage
+This directory contains configuration files for the Cursor AI assistant, including rules, ignore patterns, and documentation.
 
 ## Purpose
 
-These rules ensure that all changes made with Cursor AI assistance follow the project's standards and maintain consistent quality. The rules direct the assistant to:
+This directory centralizes Cursor AI configuration to:
 
-1. Read and understand project architecture before making changes
-2. Follow established code patterns and styles
-3. Update documentation appropriately
-4. Maintain test coverage
-5. Follow proper Git workflow
+1. Improve the quality of AI assistance with project-specific rules
+2. Standardize coding practices and ensure consistency
+3. Store documentation for Cursor configurations
+4. Optimize AI performance by specifying files to ignore
+5. Provide a central place for team members to update and reference cursor configurations
 
-The ignore patterns help improve performance by excluding large files, build artifacts, and sensitive content from analysis.
+## Files
 
-## Usage
+* **rules.md**: Comprehensive project rules for the Cursor AI assistant
+* **ignore**: Directory-specific ignore patterns (similar format to .gitignore)
+* **IGNORE.md**: Documentation of the ignore file format and usage
 
-The rules and configuration in this directory are automatically loaded by Cursor AI when working in this repository. No additional configuration is needed.
+## Ignore Configuration
+
+Cursor uses both `.cursor/ignore` (project-level) and `.cursorignore` (root-level) files to determine which files and patterns to exclude from analysis:
+
+1. `.cursor/ignore`: Project-team shared ignore patterns that should be version controlled
+2. `.cursorignore`: Root-level configuration, which can also contain user-specific ignore patterns
+
+Both files use the same pattern format (similar to `.gitignore`).
+
+## Updating Ignore Patterns
+
+When updating ignore patterns:
+
+1. Be specific about what to ignore
+2. Add comments to explain why certain patterns are ignored
+3. Test carefully to ensure critical files aren't accidentally ignored
+4. Group patterns logically by category
+5. For user-specific patterns, prefer using the root `.cursorignore` file
+
+## Relationship to Other Files
+
+The configuration in this directory works in conjunction with:
+- Tasks in `tasks/tasks.md`
+- Status updates in `docs/status.md`
+- Technical specifications in `docs/technical.md`
+- Architecture diagrams in `docs/architecture.mermaid`
 
 ## Updating Rules
 
@@ -45,15 +54,4 @@ When updating the rules, consider the following:
 3. **Provide context** - Include reasoning for important rules
 4. **Be comprehensive** - Cover all aspects of development workflow
 
-After updating rules, commit the changes and ensure all team members pull the latest version.
-
-## Updating Ignore Patterns
-
-When updating the ignore patterns:
-
-1. **Be specific** - Use precise patterns to avoid excluding important files
-2. **Add comments** - Document why certain patterns are included
-3. **Test carefully** - Ensure critical files aren't accidentally excluded
-4. **Group logically** - Organize patterns by type or purpose
-
-See `IGNORE.md` for detailed documentation on the ignore file format and usage. 
+After updating rules, commit the changes and ensure all team members pull the latest version. 
