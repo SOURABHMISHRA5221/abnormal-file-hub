@@ -1,44 +1,33 @@
-# Abnormal File Hub
+# File Storage Application with Deduplication
 
-A robust file management system with intelligent deduplication for efficient storage optimization.
+A modern file storage application with deduplication capabilities, built with Django REST Framework and React.
 
-![Abnormal File Hub](https://img.shields.io/badge/Abnormal-File%20Hub-blue)
+## Overview
 
-## 🌟 Overview
+This application allows users to:
 
-Abnormal File Hub is a modern file management system that automatically detects and handles duplicate files to save storage space. The application provides a clean interface for uploading, managing, and tracking files while giving insights into storage efficiency through deduplication.
+- Upload files through a web interface
+- Automatically deduplicate files based on content
+- Track saved storage space through deduplication
+- Download and manage uploaded files
+- Get statistics on storage usage and efficiency
 
-## ✨ Key Features
+## Architecture
 
-- **Intelligent Deduplication**: Automatically detects duplicate files using SHA-256 hash verification
-- **Storage Optimization**: Saves storage space by storing only one physical copy of duplicate files
-- **Real-time Statistics**: Displays storage savings and deduplication efficiency metrics
-- **Robust File Management**: Upload, download, search, sort, and filter files with ease
-- **RESTful API**: Comprehensive API for programmatic access to all functionality
-- **Transaction Safety**: Database transactions ensure data integrity during operations
+- **Backend**: Django REST Framework
+  - File deduplication based on SHA-256 hash comparison
+  - Efficient storage management with reference tracking
+  - API endpoints for file management and stats
 
-## 🔧 Technology Stack
+- **Frontend**: React/TypeScript
+  - Modern UI with file upload capability
+  - File listing and management
+  - Storage statistics visualization
 
-### Backend
-- Django 4.0.10 (Python)
-- Django REST Framework
-- SQLite (production deployments can use PostgreSQL)
-- Gunicorn
-
-### Frontend
-- React
-- TypeScript
-- TanStack Query (React Query)
-- Tailwind CSS
-- Heroicons
-
-### Infrastructure
-- Docker
-- Docker Compose
-
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
+
 - Docker and Docker Compose
 - Git
 
@@ -46,168 +35,96 @@ Abnormal File Hub is a modern file management system that automatically detects 
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/abnormal-file-hub.git
-   cd abnormal-file-hub
+   git clone <repository-url>
+   cd file-storage-app
    ```
 
-2. Start the application using Docker Compose:
+2. Start the application:
    ```bash
-   docker-compose up
+   docker-compose up -d
    ```
 
 3. Access the application:
    - Frontend: http://localhost:3000
    - Backend API: http://localhost:8000/api/
 
-## 📋 API Documentation
+## File Deduplication System
 
-### Files Endpoints
+The application uses a content-based deduplication system:
 
-#### List Files
-- **GET** `/api/files/`
-- Query Parameters:
-  - `search`: Search by filename
-  - `file_type`: Filter by file type (e.g., 'image/jpeg')
-  - `min_size`: Filter by minimum file size (bytes)
-  - `max_size`: Filter by maximum file size (bytes)
-  - `uploaded_after`: Filter by upload date (YYYY-MM-DD)
-  - `uploaded_before`: Filter by upload date (YYYY-MM-DD)
-  - `ordering`: Sort by field (e.g., 'size', '-uploaded_at')
-  - `is_duplicate`: Show only duplicates (`true`) or originals (`false`)
-  - `show_duplicates`: Include duplicate files in the response
+1. When a file is uploaded, a SHA-256 hash of its content is calculated
+2. If a file with the same hash already exists:
+   - The physical file is not stored again
+   - A reference to the original file is created
+   - The duplicate is marked as such in the database
+3. When accessing a duplicate file:
+   - The content is served from the original file
+   - All metadata (filename, upload date) is preserved for the duplicate
 
-#### Upload File
-- **POST** `/api/files/`
-- Form data:
-  - `file`: File to upload
+### Benefits
 
-#### Get File Details
-- **GET** `/api/files/<file_id>/`
+- Significant storage savings for duplicate content
+- Transparent to users (duplicates appear as normal files)
+- Allows tracking of deduplication efficiency
 
-#### Delete File
-- **DELETE** `/api/files/<file_id>/`
+## Management Commands
 
-#### Get Storage Statistics
-- **GET** `/api/files/stats/`
-- Returns:
-  - `total_files`: Total number of files
-  - `duplicate_files`: Number of duplicate files
-  - `unique_files`: Number of unique files
-  - `physical_storage_bytes`: Actual storage used
-  - `logical_storage_bytes`: Storage that would be used without deduplication
-  - `storage_saved_bytes`: Storage saved through deduplication
-  - `storage_saved_percentage`: Percentage of storage saved
+A set of management commands is provided for system management and testing:
 
-## 🔍 How Deduplication Works
+### Using the Management Commands
 
-1. When a file is uploaded, the system calculates a SHA-256 hash of its contents
-2. If an identical file (same hash) already exists in the system:
-   - The file is marked as a duplicate
-   - A reference is created pointing to the original file
-   - The physical file is still stored for redundancy, but marked as a duplicate in the database
-3. When accessing files, duplicates are hidden by default (can be shown with query parameters)
-4. When deleting:
-   - If deleting a duplicate, only its reference is removed
-   - If deleting an original with duplicates, one duplicate is promoted to be the new original
-
-## 🔄 Deduplication Integrity System
-
-The application includes a robust system to maintain the integrity of file deduplication:
-
-### Automatic Verification
-- Each time the application starts, it automatically verifies and fixes any inconsistencies in the deduplication references
-- The `files/apps.py` runs a verification process that ensures all duplicate flags and references are correct
-
-### Fix Duplicates Script
-
-The included `fix_duplicates.py` script provides a comprehensive solution for maintaining and repairing the deduplication system:
+Use the provided shell script to run management commands:
 
 ```bash
-# Run the script in the Docker container
-docker exec -it abnormal-file-hub-main-backend-1 python fix_duplicates.py --verbose
+# Show help
+./run_management_commands.sh help
+
+# Generate test data
+./run_management_commands.sh generate --unique=10 --duplicates=20 --clean
+
+# Analyze storage usage
+./run_management_commands.sh analyze --detail
+
+# Delete duplicate files (dry run)
+./run_management_commands.sh delete --dry-run
 ```
 
-The script performs the following operations:
+See `backend/files/management/commands/README.md` for detailed command documentation.
 
-1. **Rebuilds file references** from scratch by:
-   - Clearing existing references
-   - Resetting all duplicate flags
-   - Identifying files with identical hashes
-   - Setting one file as the original and others as duplicates
-   - Creating proper reference relationships
+## API Endpoints
 
-2. **Verifies and fixes inconsistencies** by:
-   - Finding files marked as duplicates but missing references
-   - Locating references to files that aren't marked as duplicates
-   - Automatically repairing these inconsistencies
+- `GET /api/files/` - List files with filtering
+- `POST /api/files/` - Upload new file with deduplication
+- `DELETE /api/files/{id}/` - Delete file with reference management
+- `GET /api/files/stats/` - Get storage statistics
+- `GET /api/files/{id}/download/` - Download a file
 
-3. **Recalculates storage statistics** to ensure accurate reporting
+## Development
 
-Using this script ensures the deduplication system remains intact even if file operations (like deletes) are interrupted or encounter errors.
+### Project Structure
 
-## 📊 Storage Efficiency
+- `backend/` - Django REST Framework backend
+  - `core/` - Main Django settings
+  - `files/` - File app with models, views, and serializers
+- `frontend/` - React frontend
+  - `src/components/` - React components
+  - `src/services/` - API integration services
 
-The system provides real-time statistics about storage efficiency:
+### Testing
 
-- Track the total number of files vs. unique files
-- See how much storage is physically used vs. logically needed
-- Monitor storage savings from deduplication in bytes and percentage
-
-## 🛠️ Development
-
-### Backend Development
+Run the tests using:
 
 ```bash
-cd backend
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-pip install -r requirements.txt
-python manage.py migrate
-python manage.py runserver
+docker-compose exec backend python manage.py test
 ```
 
-### Frontend Development
+Or use the test data generation command to create test data:
 
 ```bash
-cd frontend
-npm install
-npm run dev
+./run_management_commands.sh generate --unique=5 --duplicates=10
 ```
 
-### Running Tests
+## License
 
-```bash
-# Backend tests
-cd backend
-python manage.py test
-
-# Frontend tests
-cd frontend
-npm test
-```
-
-## 🔒 Security Considerations
-
-- File hashes are stored securely in the database
-- API endpoints use proper authentication (when deploying in production)
-- Transactions ensure data integrity during file operations
-- Deduplication maintains file access controls between users
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📞 Contact
-
-If you have any questions, feel free to reach out to the maintainers.
-
----
-
-Built with ❤️ for efficient file management.
+This project is licensed under the MIT License - see the LICENSE file for details.
 

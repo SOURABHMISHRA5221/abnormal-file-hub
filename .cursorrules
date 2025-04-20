@@ -14,6 +14,16 @@ SYSTEM_CONTEXT: |
   - Follow established code patterns in both backend and frontend
   - Maintain proper error handling and logging
 
+  After making any changes:
+  - Run the tests to ensure the changes are working as expected
+  - Run the linter to ensure the changes are following the correct coding standards
+  - Run the formatter to ensure the changes are following the correct coding standards
+  - Update the task list with the new changes
+  - Update status.md with the new changes
+  - Update the README.md with the new changes
+  - Commit the changes to the repository
+
+
 # File Management Rules
 ON_FILE_CHANGE: |
   Required actions after any code changes:

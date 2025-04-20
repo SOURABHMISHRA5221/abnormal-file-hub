@@ -23,7 +23,7 @@
 - Ensure log directory exists before writing
 
 ## FILE-002: Improve Error Handling
-**Status**: In Progress  
+**Status**: Completed  
 **Priority**: Medium  
 **Dependencies**: None
 
@@ -87,4 +87,50 @@
 - Use chunked upload strategy
 - Consider background processing for hash calculation
 - Implement progress tracking in frontend
-- Test with various large file types 
+- Test with various large file types
+
+## FILE-005: Management Commands for Testing and Analysis
+**Status**: Completed  
+**Priority**: High  
+**Dependencies**: None
+
+### Requirements
+- Create commands for generating test data
+- Implement storage analysis reporting
+- Add utilities for managing duplicate files
+- Ensure compatibility with Docker environment
+
+### Acceptance Criteria
+- Generate test files with configurable parameters
+- Produce detailed storage analysis reports
+- Safely manage duplicate files 
+- Commands work seamlessly in Docker containers
+
+### Technical Notes
+- Use Django management command framework
+- Implement transaction handling for database operations
+- Create helper scripts for Docker environment
+- Add proper logging for all operations
+
+## FILE-006: Documentation and Workflow Improvements
+**Status**: Completed  
+**Priority**: Medium  
+**Dependencies**: FILE-005
+
+### Requirements
+- Update project documentation
+- Create development workflow guidance
+- Document test data generation process
+- Add detailed command usage examples
+
+### Acceptance Criteria
+- Complete README with command explanations
+- Clear instructions for development workflow
+- Documentation for all management commands
+- Usage examples with common scenarios
+
+### Technical Notes
+- Create dedicated README for management commands
+- Add shell scripts for common operations
+- Include clear examples for all commands
+- Document Docker compatibility considerations 
