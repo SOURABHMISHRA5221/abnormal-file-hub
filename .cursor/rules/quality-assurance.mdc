@@ -26,18 +26,20 @@ alwaysApply: false
 - Test edge cases
 - Validate user inputs
 
-## Documentation Requirements
-- Update README.md for major feature additions
-- Maintain comprehensive API documentation
-- Document all management commands
-- Create usage examples for new features
-- Update status.md for completed work
-- Add technical documentation for architectural changes
-- Document test procedures
-
-## Git Workflow
-- Commit changes with descriptive messages
-- Update documentation before pushing
-- Verify all tests pass before pushing
-- Follow conventional commit message format when possible
-- Push changes only after updating all required documentation
+## Testing Requirements
+- Write unit tests for all new functionality
+- Ensure integration tests verify component interactions
+- Test data validation edge cases
+- Verify error handling works as expected
+- Test performance for large files and bulk operations
+- Run the full test suite before pushing any changes:
+  ```
+  # Backend tests
+  cd backend
+  python manage.py test
+  
+  # Frontend tests
+  cd frontend
+  npm test
+  ```
+- Ensure code coverage remains above 80
