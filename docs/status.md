@@ -13,6 +13,7 @@
 - ✅ Helper scripts for Docker deployment
 - ✅ Improved project documentation and README
 - ✅ Restructured Cursor rules for better organization
+- ✅ Added Cursor ignore file for performance optimization
 
 ## In Progress
 - 🏗️ Improved error handling for edge cases
@@ -34,6 +35,7 @@
 - Improved README with better structure and visuals
 - Added detailed project architecture documentation
 - Reorganized Cursor rules into dedicated directory with expanded guidelines
+- Created Cursor ignore file to optimize performance and focus AI assistance
 
 ## Known Issues
 - File type detection could be enhanced
