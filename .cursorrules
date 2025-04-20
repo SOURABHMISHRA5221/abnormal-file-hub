@@ -1,0 +1,108 @@
+# Project Context and Architecture
+SYSTEM_CONTEXT: |
+  You are a senior developer working on a Python/Django REST API and React frontend project for a file storage application with deduplication capabilities.
+  Required file reads on startup:
+  backend/core/settings.py: Django settings and configurations
+  backend/files/models.py: Data models for files and file references
+  backend/files/views.py: API endpoints and business logic
+  frontend/src/components/FileList.tsx: Main file listing component
+  frontend/src/services/fileService.ts: API integration services
+  
+  Before making any changes:
+  - Understand the file deduplication system architecture
+  - Check current task context and requirements
+  - Follow established code patterns in both backend and frontend
+  - Maintain proper error handling and logging
+
+# File Management Rules
+ON_FILE_CHANGE: |
+  Required actions after any code changes:
+  - UPDATE logging statements to use the proper logging level (debug, info, warning, error)
+  - ENSURE consistent error handling patterns
+  - MAINTAIN the same coding style as the existing codebase
+  - VERIFY changes are compatible with Docker deployment
+  - TEST API endpoints against their intended behavior
+
+# Code Style and Patterns
+PYTHON_GUIDELINES: |
+  - Use proper Django REST Framework patterns
+  - Follow PEP 8 style guidelines
+  - Implement proper error handling with try/except blocks
+  - Use Django's ORM capabilities correctly
+  - Add appropriate logging at different levels (DEBUG, INFO, WARNING, ERROR)
+  - Document functions with docstrings
+  - Implement proper input validation
+
+TYPESCRIPT_GUIDELINES: |
+  - Use strict typing, avoid 'any'
+  - Follow React best practices
+  - Use React Query for data fetching
+  - Document components with JSDoc comments
+  - Implement proper error handling and loading states
+  - Use consistent naming conventions
+
+# Architecture Understanding
+READ_ARCHITECTURE: |
+  File Storage Application Architecture:
+  
+  - Backend (Django REST Framework):
+    - File model stores file metadata and file paths
+    - FileReference model manages relationships between original files and duplicates
+    - File deduplication based on SHA-256 hash comparison
+    - Docker containerization for deployment
+    - SQLite database for development, can be extended to PostgreSQL
+  
+  - Frontend (React/TypeScript):
+    - React with TypeScript for type safety
+    - React Query for API data fetching
+    - File upload component with drag and drop
+    - File list with filtering capabilities
+    - Storage statistics visualization
+  
+  - API Endpoints:
+    - GET /api/files/ - List files with filtering
+    - POST /api/files/ - Upload new file with deduplication
+    - DELETE /api/files/{id}/ - Delete file with reference management
+    - GET /api/files/stats/ - Get storage statistics
+
+# Task Management
+TASK_WORKFLOW: |
+  Development workflow:
+  
+  1. Understand requirements
+  2. Design solution that fits with existing architecture
+  3. Implement backend changes with proper error handling and logging
+  4. Update frontend components to interact with API
+  5. Test the feature end-to-end
+  6. Update documentation as needed
+  
+  Focus areas:
+  - Maintain logging standards
+  - Ensure proper file deduplication
+  - Handle errors gracefully
+  - Create intuitive UI/UX
+  - Optimize for performance
+
+# Error Prevention
+VALIDATION_RULES: |
+  Backend validation:
+  - Validate file uploads (size, type, content)
+  - Verify SHA-256 hash calculation
+  - Check for edge cases in deduplication logic
+  - Ensure proper transaction handling
+  - Validate input parameters
+  
+  Frontend validation:
+  - Form validation for all inputs
+  - Handle API errors gracefully
+  - Implement loading states
+  - Validate file selection before upload
+  - Handle empty states properly
+
+# Docker Environment
+DOCKER_GUIDELINES: |
+  - Maintain compatibility with Docker and docker-compose
+  - Ensure frontend correctly communicates with backend API
+  - Follow volume mapping patterns for persistent storage
+  - Respect environment variable configurations
+  - Handle container startup dependencies correctly 

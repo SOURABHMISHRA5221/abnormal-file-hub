@@ -1,0 +1,38 @@
+graph TD
+    %% Frontend Components
+    A[React Frontend] --> B{API Gateway}
+    
+    %% Backend Components
+    B --> C[Django REST Framework]
+    C --> D[File Views]
+    C --> E[Auth Views]
+    
+    %% Data Models
+    D --> F[File Model]
+    D --> G[FileReference Model]
+    
+    %% Database and Storage
+    F --> H[(SQLite/PostgreSQL)]
+    G --> H
+    F --> I[(File Storage)]
+    
+    %% File Operations
+    J[File Upload] --> K{Deduplication Logic}
+    K --> L[Calculate SHA-256]
+    L --> M{Duplicate?}
+    M -->|Yes| N[Create FileReference]
+    M -->|No| O[Store New File]
+    
+    %% User Interactions
+    P[User] --> Q[File List]
+    P --> J
+    P --> R[File Delete]
+    P --> S[Storage Stats]
+    
+    %% Styling
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style B fill:#bbf,stroke:#333,stroke-width:2px
+    style C fill:#ddf,stroke:#333,stroke-width:2px
+    style D fill:#ddf,stroke:#333,stroke-width:2px
+    style K fill:#fdd,stroke:#333,stroke-width:2px
+    style M fill:#fdd,stroke:#333,stroke-width:2px 
