@@ -156,4 +156,27 @@
 - Use Markdown formatting features
 - Add badges for technology stack
 - Include emojis for section headers
-- Provide code examples in formatted blocks 
+- Provide code examples in formatted blocks
+
+## FILE-008: Cursor Rules Restructuring
+**Status**: Completed  
+**Priority**: Medium  
+**Dependencies**: None
+
+### Requirements
+- Restructure cursor rules into dedicated directory
+- Improve organization of rules
+- Expand guidelines for different code types
+- Create documentation for rules usage
+
+### Acceptance Criteria
+- Rules organized in .cursor directory
+- Comprehensive Python, TypeScript, and Docker guidelines
+- Clear workflow and documentation requirements
+- README explaining rules structure and purpose
+
+### Technical Notes
+- Use Markdown formatting for better readability
+- Organize rules by category
+- Include guidelines for all project aspects
+- Create descriptive README for the directory 

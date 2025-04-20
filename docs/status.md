@@ -12,6 +12,7 @@
 - ✅ Storage analysis and reporting tools
 - ✅ Helper scripts for Docker deployment
 - ✅ Improved project documentation and README
+- ✅ Restructured Cursor rules for better organization
 
 ## In Progress
 - 🏗️ Improved error handling for edge cases
@@ -32,6 +33,7 @@
 - Enhanced documentation for development workflow
 - Improved README with better structure and visuals
 - Added detailed project architecture documentation
+- Reorganized Cursor rules into dedicated directory with expanded guidelines
 
 ## Known Issues
 - File type detection could be enhanced
