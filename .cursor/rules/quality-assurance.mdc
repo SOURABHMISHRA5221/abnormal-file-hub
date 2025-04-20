@@ -1,0 +1,43 @@
+---
+description: Quality assurance and error prevention guidelines
+globs: 
+alwaysApply: false
+---
+
+# Quality Assurance
+
+## Architecture Understanding
+- Load and parse complete Mermaid diagrams in docs/architecture.mermaid
+- Extract and understand:
+  - Module boundaries and relationships
+  - Data flow patterns
+  - System interfaces
+  - Component dependencies
+- Validate any changes against architectural constraints
+- Ensure new code maintains defined separation of concerns
+
+## Error Prevention
+- Verify type consistency
+- Check for potential null/undefined
+- Validate against business rules
+- Ensure error handling
+- Implement logging for errors
+- Add transaction handling for database operations
+- Test edge cases
+- Validate user inputs
+
+## Documentation Requirements
+- Update README.md for major feature additions
+- Maintain comprehensive API documentation
+- Document all management commands
+- Create usage examples for new features
+- Update status.md for completed work
+- Add technical documentation for architectural changes
+- Document test procedures
+
+## Git Workflow
+- Commit changes with descriptive messages
+- Update documentation before pushing
+- Verify all tests pass before pushing
+- Follow conventional commit message format when possible
+- Push changes only after updating all required documentation

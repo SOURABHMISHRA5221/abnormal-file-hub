@@ -1,0 +1,25 @@
+---
+description: File management workflow rules for the Abnormal File Hub project
+globs: "*.*"
+alwaysApply: false
+---
+
+# File Management Rules
+
+When modifying files in this project, follow these guidelines:
+
+## Actions After Code Changes
+1. READ docs/architecture.mermaid to verify architectural compliance
+2. UPDATE docs/status.md with:
+   - Current progress
+   - Any new issues encountered
+   - Completed items
+3. VALIDATE changes against docs/technical.md specifications
+4. VERIFY task progress against tasks/tasks.md
+5. COMMIT changes with descriptive messages
+
+## Commit Standards
+- Use clear, descriptive commit messages
+- Reference task IDs when applicable (e.g., "FILE-008: Add cursor ignore file")
+- Group related changes in logical commits
+- Verify your changes work before committing

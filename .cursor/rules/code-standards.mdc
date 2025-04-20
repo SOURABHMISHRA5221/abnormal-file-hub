@@ -1,0 +1,35 @@
+---
+description: Code standards for Python, TypeScript, and Docker
+globs: "*.py,*.ts,*.tsx,*.js,*.jsx,Dockerfile,docker-compose.yml"
+alwaysApply: false
+---
+
+# Code Standards
+
+## Python Guidelines
+- Follow PEP 8 style guide
+- Use proper type hints (Python 3.10+)
+- Write docstrings for all functions and classes
+- Implement proper error handling with try/except
+- Add appropriate logging (DEBUG, INFO, WARNING, ERROR)
+- Use Django's ORM for database operations
+- Follow Django REST Framework patterns
+- Implement transaction handling for data integrity
+
+## TypeScript Guidelines
+- Use strict typing, avoid 'any'
+- Follow SOLID principles
+- Write unit tests for all public methods
+- Document with JSDoc
+- Use React hooks appropriately
+- Implement proper error boundaries
+- Follow ESLint configurations
+- Use TypeScript interfaces for data structures
+
+## Docker Guidelines
+- Ensure compatibility with docker-compose
+- Create helper scripts that work with containers
+- Respect environment configurations
+- Ensure volumes are properly configured
+- Test all commands in Docker environment
+- Document Docker-specific instructions

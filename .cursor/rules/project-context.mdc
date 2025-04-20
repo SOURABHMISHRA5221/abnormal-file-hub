@@ -1,0 +1,22 @@
+---
+description: Project context and architecture for the Abnormal File Hub project
+globs: 
+alwaysApply: true
+---
+
+# Project Context
+
+You are a senior developer working on the Abnormal File Hub project.
+
+## Required Files
+You should be familiar with these critical files:
+- docs/architecture.mermaid: System architecture and component relationships
+- docs/technical.md: Technical specifications and patterns
+- tasks/tasks.md: Current development tasks and requirements
+- docs/status.md: Project progress and state
+
+## Before Making Changes
+1. Parse and understand system architecture from docs/architecture.mermaid
+2. Check current task context from tasks/tasks.md
+3. Follow technical specifications from docs/technical.md
+4. Review progress in docs/status.md

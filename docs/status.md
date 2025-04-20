@@ -14,6 +14,7 @@
 - ✅ Improved project documentation and README
 - ✅ Restructured Cursor rules for better organization
 - ✅ Added Cursor ignore file for performance optimization
+- ✅ Migrated to MDC-format Cursor rules for improved context awareness
 
 ## In Progress
 - 🏗️ Improved error handling for edge cases
@@ -36,6 +37,7 @@
 - Added detailed project architecture documentation
 - Reorganized Cursor rules into dedicated directory with expanded guidelines
 - Created Cursor ignore file to optimize performance and focus AI assistance
+- Migrated to MDC-format rules in .cursor/rules/ for better context handling
 
 ## Known Issues
 - File type detection could be enhanced

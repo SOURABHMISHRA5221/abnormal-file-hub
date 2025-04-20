@@ -202,4 +202,27 @@
 - Use gitignore-compatible pattern format
 - Group patterns by category
 - Add comments for clarity
-- Include documentation file for the ignore file 
+- Include documentation file for the ignore file
+
+## FILE-010: Migrate to MDC-Format Cursor Rules
+**Status**: Completed  
+**Priority**: Medium  
+**Dependencies**: FILE-008
+
+### Requirements
+- Migrate cursor rules to MDC format in .cursor/rules/ directory
+- Create separate rule files for different concerns
+- Configure glob patterns for context-aware rule application
+- Update documentation for new rule format
+
+### Acceptance Criteria
+- Rules organized in .cursor/rules/ with MDC format
+- Proper metadata for each rule file
+- Each rule properly scoped to relevant files
+- Updated README explaining MDC rule structure
+
+### Technical Notes
+- Follow MDC metadata format with description, globs, and alwaysApply settings
+- Organize rules by functionality
+- Set appropriate glob patterns for selective application
+- Include explanatory README in rules directory 

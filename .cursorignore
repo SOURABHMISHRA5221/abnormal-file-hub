@@ -1,0 +1,81 @@
+# Cursor Ignore File
+#
+# This file specifies patterns for files and directories that should be ignored
+# by the Cursor AI assistant. Similar to .gitignore but specifically for Cursor.
+
+# Build artifacts and compiled code
+build/
+dist/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+*.egg
+
+# Package directories
+node_modules/
+venv/
+env/
+.env/
+
+# Cache and temporary files
+.cache/
+.pytest_cache/
+.coverage
+.hypothesis/
+.tox/
+.temp/
+.tmp/
+tmp/
+temp/
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Large binary files and data
+*.gz
+*.tar
+*.zip
+*.rar
+*.7z
+*.pdf
+*.mp4
+*.mov
+*.mp3
+*.wav
+*.iso
+*.dmg
+*.bin
+*.exe
+*.dll
+*.jar
+
+# Project specific
+media/uploads/
+*.sqlite3
+*.db
+backend/data/
+
+# Files that shouldn't be analyzed for performance reasons
+saurabhmishra_*.zip
+
+# Large generated files
+*.min.js
+*.min.css
+*.bundle.js
+
+# Sensitive content
+.env
+.env.*
+secrets.json
+credentials.json
+
+# Documentation images and assets
+docs/images/
+docs/assets/ 

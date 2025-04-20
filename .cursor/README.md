@@ -12,9 +12,16 @@ This directory centralizes Cursor AI configuration to:
 4. Optimize AI performance by specifying files to ignore
 5. Provide a central place for team members to update and reference cursor configurations
 
-## Files
+## Files and Directories
 
-* **rules.md**: Comprehensive project rules for the Cursor AI assistant
+* **rules/**: Directory containing MDC format rules files:
+  * **project-context.mdc**: Project context and architecture
+  * **file-management.mdc**: Guidelines for file changes
+  * **code-standards.mdc**: Language-specific standards
+  * **quality-assurance.mdc**: Error prevention and documentation
+  * **README.md**: Explanation of the rules structure
+
+* **rules.md**: Legacy comprehensive project rules (deprecated, use rules/ instead)
 * **ignore**: Directory-specific ignore patterns (similar format to .gitignore)
 * **IGNORE.md**: Documentation of the ignore file format and usage
 
@@ -37,21 +44,20 @@ When updating ignore patterns:
 4. Group patterns logically by category
 5. For user-specific patterns, prefer using the root `.cursorignore` file
 
+## Updating Rules
+
+When updating rules:
+
+1. Follow the MDC format in the rules/ directory
+2. Organize related concepts in appropriate rule files
+3. Set appropriate metadata (description, globs, alwaysApply)
+4. Use clear, actionable language
+5. Update the rules/README.md when adding new rules
+
 ## Relationship to Other Files
 
 The configuration in this directory works in conjunction with:
 - Tasks in `tasks/tasks.md`
 - Status updates in `docs/status.md`
 - Technical specifications in `docs/technical.md`
-- Architecture diagrams in `docs/architecture.mermaid`
-
-## Updating Rules
-
-When updating the rules, consider the following:
-
-1. **Be explicit** - Clearly define requirements and expectations
-2. **Be consistent** - Ensure rules don't contradict each other
-3. **Provide context** - Include reasoning for important rules
-4. **Be comprehensive** - Cover all aspects of development workflow
-
-After updating rules, commit the changes and ensure all team members pull the latest version. 
+- Architecture diagrams in `docs/architecture.mermaid` 
