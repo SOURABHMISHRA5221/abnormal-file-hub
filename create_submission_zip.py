@@ -10,7 +10,7 @@ import sys
 def get_current_user():
     """Get current user name safely."""
     try:
-        return os.getenv('USER') or os.getlogin() or 'unknown_user'
+        return "SourabhMishra"
     except Exception:
         return 'unknown_user'
 
